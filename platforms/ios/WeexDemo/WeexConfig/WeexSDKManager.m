@@ -17,9 +17,22 @@
 + (void)setup;
 {
     NSURL *url = nil;
+    
+
+    
 #if DEBUG
     //If you are debugging in device , please change the host to current IP of your computer.
-    url = [NSURL URLWithString:@"https://testmmmmmcyj.s3.us-west-2.amazonaws.com/index.js"];
+    
+    //网络路径
+//    url = [NSURL URLWithString:@"https://testmmmmmcyj.s3.us-west-2.amazonaws.com/index.js"];
+    
+    //沙河路径（下载）
+    NSString * documentstr = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    NSString * indexPath = [NSString stringWithFormat:@"file://%@/index.js",documentstr];
+    url =[NSURL URLWithString:indexPath];
+    
+    //默认本地路径(NSBundle)
+//    url =[NSURL URLWithString:BUNDLE_URL];
 #else
     url = [NSURL URLWithString:BUNDLE_URL];
 #endif
@@ -39,6 +52,7 @@
     [self initWeexSDK];
     [self loadCustomContainWithScannerWithUrl:url];
 }
+
 
 + (void)initWeexSDK
 {
